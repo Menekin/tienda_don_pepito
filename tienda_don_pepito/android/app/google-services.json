@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "592469893624",
+    "project_id": "mibarrioapp-334114",
+    "storage_bucket": "mibarrioapp-334114.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592469893624:android:2942a66c159a4a0646b60d",
+        "android_client_info": {
+          "package_name": "com.tienda_don_pepito.tienda_don_pepito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592469893624-j8dr7ov85giv5u9gdk69j7e5j5jgp6hg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi3NqGq7YDRRZcqHBRLbLCrSbbN1T8CU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592469893624-j8dr7ov85giv5u9gdk69j7e5j5jgp6hg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
