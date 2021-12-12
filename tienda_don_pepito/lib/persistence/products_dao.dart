@@ -10,7 +10,7 @@ class ProductsDAO{
     await srvConn.getProducts(idtienda).then((productsData) {
       List records = productsData.split("|");
       records.forEach((element) {
-        products.add(Product.fromString(element));
+        products.add(Product.fromString(idtienda+";"+element));
       });
     });
     return products;

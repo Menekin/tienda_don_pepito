@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:tienda_don_pepito/model/store.dart';
 import 'package:tienda_don_pepito/persistence/database_manager.dart';
@@ -9,13 +10,40 @@ import 'customer_form.dart';
 //1. StatelessWidget: Tipo de vista o ventana que no cambia. Siempre va a ser la misma
 //2. StatefullWidget: Tipo de vista o ventana que cambia su estado o componentes
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   List<String> images = [
     "images/listado_tiendas.png",
     "images/generar_pedido.png",
     "images/registro_clientes.png",
     "images/buzon_sugerencias.png"
   ];
+
+  @override
+  void initState() {
+    FirebaseMessaging.instance.getInitialMessage();
+    FirebaseMessaging.onMessage.listen(
+          (message) {
+        if (message.notification != null) {
+          print(message.notification!.body);
+          print(message.notification!.title);
+        }
+        print(message);
+      },
+    );
+    FirebaseMessaging.onMessageOpenedApp.listen(
+          (messagge) {
+        final routeMessagge = messagge.data["route"];
+        print(routeMessagge);
+        Navigator.of(context).pushNamed(routeMessagge);
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +88,15 @@ class HomeView extends StatelessWidget {
         MaterialPageRoute(builder: (context) => StoresListView()),
       );
     }
+    /*
     else if(index == 1){
       var t1 = Store("101", "Gato", "Cali", 1.0, 2.0, "7777777", "3105555555", "gato@gmail.com", "www.elgato.com", BusinessType.abarrotes,"xxx");
       var t2 = Store("201", "Loro", "Bogotá", 1.0, 2.0, "3333333", "3105555555", "loro@gmail.com", "www.elloro.com", BusinessType.video_juegos,"yyy");
       DataBaseManager.db.insertarNuevaTienda(t1);
       DataBaseManager.db.insertarNuevaTienda(t2);
       DataBaseManager.db.listaTiendas("select * FROM Tienda").then((value) => print(value));
-    }
+    }*/
+
     else if(index == 2) {
       Navigator.push(
         context,

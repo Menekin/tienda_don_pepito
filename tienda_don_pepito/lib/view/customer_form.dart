@@ -6,7 +6,7 @@ class CustomerFormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Form Validation Demo';
+    const appTitle = 'Formulario de registro';
 
     return MaterialApp(
       title: appTitle,

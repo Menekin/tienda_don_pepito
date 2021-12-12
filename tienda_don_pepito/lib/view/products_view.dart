@@ -2,39 +2,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tienda_don_pepito/model/product.dart';
 import 'package:tienda_don_pepito/model/store.dart';
+import 'package:tienda_don_pepito/persistence/database_manager.dart';
 import 'package:tienda_don_pepito/view/google_maps.dart';
+import 'package:tienda_don_pepito/view/order_view.dart';
 
 class ProductsListView extends StatefulWidget {
-
   final List<Product> LstPr;
   final Store tienda;
-
   ProductsListView(this.LstPr, this.tienda);
 
-
-    @override
+  @override
   _ProductsListViewState createState() => _ProductsListViewState();
-
 }
 
 class _ProductsListViewState extends State<ProductsListView> {
+  final _biggerFont = const TextStyle(fontSize: 18.0, color: Colors.blueAccent);
 
-  //final stDAO = StoreDAO();
- final _biggerFont = const TextStyle(fontSize: 18.0, color: Colors.blueAccent);
-
- void handleTap(int item) {
-   switch (item) {
-     case 0:
-       Navigator.push(
-         context,
-         MaterialPageRoute(builder: (context) => GoogleMapsWidget(widget.tienda)),
-       );
-       break;
-     case 1:
-       print("Seleccionó carrito de compras");
-       break;
-   }
- }
+  void handleTap(int item) {
+    switch (item) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GoogleMapsWidget(widget.tienda)),
+        );
+        break;
+      case 1:
+        DataBaseManager.db.listaProductosPedidoTemp().then((value) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => OrderListView(value)));
+        });
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +62,9 @@ class _ProductsListViewState extends State<ProductsListView> {
         padding: const EdgeInsets.all(16.0),
         itemCount: widget.LstPr.length,
         itemBuilder: (
-            context,
-            i,
-            ) {
+          context,
+          i,
+        ) {
           return _buildRow(widget.LstPr[i]);
         });
   }
@@ -77,16 +79,14 @@ class _ProductsListViewState extends State<ProductsListView> {
         pdt.precio.toString(),
         style: TextStyle(fontSize: 20, color: Colors.blue),
       ),
-      trailing: Icon(
-        Icons.ac_unit_outlined,
-        size: 20,
-        color: Colors.amber,
+      trailing: IconButton(
+        icon: Icon(Icons.add_shopping_cart, color: Colors.black),
+        onPressed: () {
+          pdt.cantidad = 1;
+          DataBaseManager.db.insertarNuevoProductoTemp(pdt);
+          DataBaseManager.db.listaProductosPedidoTemp().then((value) {});
+        },
       ),
-      onTap: () {
-
-
-
-      },
     );
   }
 }

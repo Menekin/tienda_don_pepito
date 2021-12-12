@@ -44,7 +44,7 @@ class _StoresListViewState extends State<StoresListView> {
       ),
       subtitle: Text(
         st.direccion,
-        style: TextStyle(fontSize: 20, color: Colors.blue),
+        style: TextStyle(fontSize: 12, color: Colors.blue),
       ),
       leading: Image.network(
           "https://drive.google.com/uc?export=view&id=" + st.logo),
