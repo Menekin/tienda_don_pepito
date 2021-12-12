@@ -61,7 +61,7 @@ class _StoresListViewState extends State<StoresListView> {
         prDAO.getProductsFromServer(st.id).then((listaProductos) => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProductsListView(listaProductos)),
+                MaterialPageRoute(builder: (context) => ProductsListView(listaProductos, st)),
               ),
             });
       },

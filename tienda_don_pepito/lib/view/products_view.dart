@@ -1,28 +1,55 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tienda_don_pepito/model/product.dart';
+import 'package:tienda_don_pepito/model/store.dart';
+import 'package:tienda_don_pepito/view/google_maps.dart';
 
 class ProductsListView extends StatefulWidget {
 
   final List<Product> LstPr;
+  final Store tienda;
 
-  ProductsListView(this.LstPr);
+  ProductsListView(this.LstPr, this.tienda);
 
-  @override
+
+    @override
   _ProductsListViewState createState() => _ProductsListViewState();
 
 }
 
-
 class _ProductsListViewState extends State<ProductsListView> {
+
   //final stDAO = StoreDAO();
  final _biggerFont = const TextStyle(fontSize: 18.0, color: Colors.blueAccent);
+
+ void handleTap(int item) {
+   switch (item) {
+     case 0:
+       Navigator.push(
+         context,
+         MaterialPageRoute(builder: (context) => GoogleMapsWidget(widget.tienda)),
+       );
+       break;
+     case 1:
+       print("Seleccionó carrito de compras");
+       break;
+   }
+ }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de Negocios en el Barrio'),
+        title: const Text('Lista de Productos'),
+        actions: <Widget>[
+          PopupMenuButton<int>(
+            onSelected: (item) => handleTap(item),
+            itemBuilder: (context) => [
+              PopupMenuItem<int>(value: 0, child: Text('Ver en google maps')),
+              PopupMenuItem<int>(value: 1, child: Text('Carrito de compras')),
+            ],
+          ),
+        ],
       ),
       body: _buildStoreList(),
     );
